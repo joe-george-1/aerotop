@@ -652,7 +652,7 @@ table,
   font-size: 15px;
   font-weight: 500;
   padding: 0 14px;
-  margin-left: 20px;
+  margin-left: 40px;
   box-shadow: var(--gel-inset);
   outline: none;
   transition: box-shadow 0.2s;
