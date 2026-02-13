@@ -1,0 +1,1445 @@
+/* ═══════════════════════════════════════════════════════════════
+   AEROTOP — Species 8472 Skin
+   TRUE Frutiger Aero: Dark top → Light bottom · Sharp specular
+   Advil Liqui-Gel · Achromatic · Extreme contrast · Scattered
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+/* ── Root Variables ────────────────────────────────────────── */
+.skin-winamp-chrome {
+  /*
+   * TRUE Frutiger Aero shell: DARK top → LIGHT bottom.
+   * The specular highlight sits on the dark upper zone for
+   * maximum contrast — the signature "glass dome" illusion.
+   */
+  --gel-shell: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #252525 10%,
+      #333333 22%,
+      #4a4a4a 38%,
+      #6a6a6a 52%,
+      #909090 68%,
+      #b8b8b8 82%,
+      #d0d0d0 92%,
+      #c0c0c0 100%);
+
+  /* Extreme-contrast bevel — deep shadows, bright edges */
+  --gel-bevel:
+    /* Bright rim top */
+    0 -1px 0 rgba(255, 255, 255, 0.5),
+    /* Dark rim bottom */
+    0 2px 0 rgba(0, 0, 0, 0.7),
+    -1px 0 0 rgba(255, 255, 255, 0.15),
+    1px 0 0 rgba(0, 0, 0, 0.3),
+    /* Deep cast shadow */
+    3px 6px 16px rgba(0, 0, 0, 0.6),
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    /* Inner top darkness / bottom light */
+    inset 0 4px 12px rgba(0, 0, 0, 0.5),
+    inset 0 -3px 8px rgba(255, 255, 255, 0.25);
+
+  --gel-bevel-sm:
+    0 -1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 0 rgba(0, 0, 0, 0.6),
+    2px 4px 10px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.25),
+    inset 0 3px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 6px rgba(255, 255, 255, 0.2);
+
+  --gel-inset:
+    inset 0 4px 14px rgba(0, 0, 0, 0.75),
+    inset 0 -2px 6px rgba(255, 255, 255, 0.08),
+    inset 3px 3px 10px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.15);
+
+  /* Glass inset for data areas */
+  --glass-inset-bg: rgba(5, 8, 14, 0.88);
+
+  /* Text */
+  --text-light: #e8e8e8;
+  --text-bright: #ffffff;
+  --text-mid: #999;
+  --text-dark-on-light: #2a2a2a;
+  --text-glow: 0 0 6px rgba(255, 255, 255, 0.15);
+  --text-data: #d4e0e8;
+  --text-dim: rgba(200, 200, 200, 0.45);
+
+  /* Functional accent (data only) */
+  --data-green: #55f080;
+  --data-yellow: #d8e040;
+  --data-orange: #e8a838;
+  --data-red: #e85858;
+
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ── Main Container — Fully Transparent, Draggable ─────────── */
+.wc-main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: transparent !important;
+  -webkit-app-region: drag;
+}
+
+.wc-bg-shape {
+  display: none !important;
+}
+
+.wc-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 35px;
+  gap: 14px;
+  background: transparent;
+}
+
+/* All interactive elements cancel drag */
+button,
+input,
+table,
+.wc-panel,
+.wc-stat-item,
+.wc-fkey,
+.wc-search-input,
+.wc-toolbar-btn,
+.wc-window-btn,
+.wc-process-table-wrap,
+.wc-signal-btn,
+.wc-kill-cancel,
+.wc-logo-tag,
+.wc-window-controls {
+  -webkit-app-region: no-drag;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIQUI-GEL PANEL — True Frutiger Aero
+   Dark top → Light bottom. Sharp specular oval on the dark zone.
+   ═══════════════════════════════════════════════════════════════ */
+.wc-panel {
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.7);
+  box-shadow: var(--gel-bevel);
+  position: relative;
+  overflow: hidden;
+  border-radius: 40% 55% 50% 45% / 45% 50% 55% 40%;
+  padding: 22px 30px;
+}
+
+/* SPECULAR HIGHLIGHT — sharp bright oval on dark upper zone */
+.wc-panel::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 10%;
+  right: 10%;
+  height: 40%;
+  background: radial-gradient(ellipse 80% 70% at 50% 15%,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.35) 30%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 80%);
+  pointer-events: none;
+  z-index: 6;
+  border-radius: inherit;
+}
+
+/* Subtle bottom edge light line (since bottom is now lighter) */
+.wc-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.wc-panel-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  /* Light text on dark upper zone */
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+  margin-bottom: 8px;
+  padding-left: 6px;
+  position: relative;
+  z-index: 7;
+}
+
+/* ── Title Bar → HIDDEN ───────────────────────────────────── */
+.wc-titlebar {
+  display: none !important;
+}
+
+/* ── Floating Window Controls ──────────────────────────────── */
+.wc-window-controls {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  display: flex;
+  gap: 4px;
+  z-index: 100;
+  -webkit-app-region: no-drag;
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.6);
+  box-shadow: var(--gel-bevel-sm);
+  padding: 4px 7px;
+  border-radius: 40px;
+}
+
+/* Specular highlight on cluster */
+.wc-window-controls::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 12%;
+  right: 12%;
+  height: 42%;
+  background: radial-gradient(ellipse 80% 80% at 50% 10%,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 255, 255, 0.2) 40%,
+      transparent 80%);
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.wc-window-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+  /* Light text on dark top */
+  color: #ccc;
+  text-shadow: var(--text-glow);
+  /* Individual gel bubble — dark top, light bottom */
+  background: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #2a2a2a 20%,
+      #555555 50%,
+      #888888 75%,
+      #aaaaaa 95%,
+      #999999 100%);
+  box-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.3),
+    0 1px 0 rgba(0, 0, 0, 0.5),
+    inset 0 2px 5px rgba(0, 0, 0, 0.4),
+    inset 0 -2px 4px rgba(255, 255, 255, 0.15),
+    1px 2px 6px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  transition: transform 0.12s;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Specular dot on each button */
+.wc-window-btn::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 20%;
+  right: 20%;
+  height: 35%;
+  background: radial-gradient(ellipse at 50% 10%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-window-btn:hover {
+  transform: scale(1.15);
+}
+
+.wc-window-btn.close:hover {
+  background: linear-gradient(180deg, #400, #722, #c44, #d88);
+  color: #fff;
+}
+
+/* ── AEROTOP Logo Tag ──────────────────────────────────────── */
+.wc-logo-tag {
+  position: absolute;
+  top: 14px;
+  left: 25px;
+  z-index: 100;
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #ccc;
+  text-shadow: var(--text-glow);
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.6);
+  box-shadow: var(--gel-bevel-sm);
+  padding: 6px 18px;
+  border-radius: 30px;
+  -webkit-app-region: no-drag;
+  overflow: hidden;
+}
+
+/* Specular on logo */
+.wc-logo-tag::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 10%;
+  right: 10%;
+  height: 50%;
+  background: radial-gradient(ellipse at 50% 5%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Info Row — Disheveled ─────────────────────────────────── */
+.wc-info-row {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+  margin-top: 8px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.wc-info-row>.wc-panel {
+  flex: 1;
+  padding: 24px 34px;
+}
+
+.wc-info-row>.wc-panel:first-child {
+  flex: 2;
+  /* Softer left radius so CPU label isn't cropped */
+  border-radius: 22px 58% 52% 22px / 22px 52% 48% 22px;
+  transform: rotate(-0.5deg);
+  padding: 24px 34px 24px 28px;
+}
+
+.wc-info-row>.wc-panel:last-child {
+  /* Memory panel: less aggressive blob radius to avoid cropping */
+  border-radius: 30px 38px 32px 35px / 35px 30px 38px 32px;
+  transform: rotate(0.8deg) translateY(6px);
+  /* Extra padding to prevent text cropping */
+  padding: 22px 32px 22px 28px;
+}
+
+/* ── CPU EQ Visualizer ─────────────────────────────────────── */
+.wc-cpu-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 110px;
+  padding: 10px 16px;
+  background: var(--glass-inset-bg);
+  box-shadow: var(--gel-inset);
+  overflow: hidden;
+  position: relative;
+  border-radius: 28% 48% 42% 32% / 38% 32% 48% 42%;
+  z-index: 7;
+}
+
+/* Scanline texture */
+.wc-cpu-eq::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 2px,
+      rgba(255, 255, 255, 0.012) 2px, rgba(255, 255, 255, 0.012) 3px);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.wc-eq-bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.wc-eq-bar {
+  width: 100%;
+  min-width: 4px;
+  max-width: 28px;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.3s ease-out;
+  /* Green → Yellow → Red gradient (no indigo!) */
+  background: linear-gradient(to top,
+      #22cc44 0%,
+      #44dd44 15%,
+      #88ee33 30%,
+      #bbdd22 45%,
+      #ddcc11 55%,
+      #ee9911 68%,
+      #ee6622 78%,
+      #dd3322 88%,
+      #cc1111 100%);
+  box-shadow:
+    0 0 6px rgba(80, 220, 100, 0.2),
+    inset 1px 0 2px rgba(255, 255, 255, 0.25),
+    inset -1px 0 2px rgba(0, 0, 0, 0.2);
+  border-radius: 2px 2px 0 0;
+}
+
+.wc-eq-bar-peak {
+  width: 100%;
+  min-width: 4px;
+  max-width: 28px;
+  height: 2px;
+  position: absolute;
+  background: #ff4444;
+  box-shadow: 0 0 8px rgba(255, 80, 80, 0.6);
+  transition: bottom 0.1s ease-out;
+  border-radius: 1px;
+}
+
+/* ── CPU Overall ───────────────────────────────────────────── */
+.wc-cpu-overall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 4px 8px;
+  position: relative;
+  z-index: 7;
+}
+
+.wc-cpu-pct {
+  font-family: 'Orbitron', monospace;
+  font-size: 34px;
+  font-weight: 900;
+  /* On the lower lighter zone → dark text */
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.wc-cpu-model {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(150, 220, 180, 0.5);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* ── Memory Meters ─────────────────────────────────────────── */
+.wc-mem-meter {
+  margin: 5px 0;
+  position: relative;
+  z-index: 7;
+}
+
+.wc-mem-bar-outer {
+  height: 22px;
+  background: var(--glass-inset-bg);
+  box-shadow: var(--gel-inset);
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px;
+}
+
+.wc-mem-bar-inner {
+  height: 100%;
+  transition: width 0.5s ease-out;
+  position: relative;
+  border-radius: 30px;
+}
+
+.wc-mem-bar-inner.ram {
+  background: linear-gradient(90deg,
+      #22aa44 0%,
+      #44cc44 30%,
+      #88dd33 55%,
+      #bbcc22 75%,
+      #ddaa11 90%,
+      #ee7711 100%);
+  box-shadow:
+    0 0 8px rgba(80, 200, 100, 0.25),
+    inset 0 1px 3px rgba(255, 255, 255, 0.35);
+}
+
+.wc-mem-bar-inner.swap {
+  background: linear-gradient(90deg,
+      rgba(148, 148, 148, 0.5),
+      rgba(178, 178, 178, 0.7),
+      rgba(210, 210, 210, 0.85),
+      rgba(238, 238, 238, 0.9));
+  box-shadow:
+    0 0 8px rgba(185, 185, 185, 0.25),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+.wc-mem-bar-text {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  z-index: 4;
+}
+
+.wc-mem-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  /* On dark upper zone → light text */
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+  margin-bottom: 3px;
+}
+
+/* ── Stats Grid (Scattered Gel Orbs) ───────────────────────── */
+.wc-stats-grid {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: 20px;
+  margin-right: 15px;
+  padding: 4px 0;
+}
+
+.wc-stat-item {
+  flex: 1;
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.6);
+  padding: 6px 16px;
+  text-align: center;
+  box-shadow: var(--gel-bevel-sm);
+  position: relative;
+  overflow: hidden;
+  /* Flat low-profile oval pill */
+  border-radius: 50px;
+  min-height: 0;
+}
+
+/* Sharp specular highlight */
+.wc-stat-item::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 10%;
+  right: 10%;
+  height: 48%;
+  background: radial-gradient(ellipse 85% 80% at 50% 8%,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(255, 255, 255, 0.28) 35%,
+      rgba(255, 255, 255, 0.08) 55%,
+      transparent 80%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Individual dishevel */
+.wc-stat-item:nth-child(1) {
+  transform: translateY(3px) rotate(-0.8deg);
+}
+
+.wc-stat-item:nth-child(2) {
+  transform: translateY(-2px) rotate(0.5deg);
+}
+
+.wc-stat-item:nth-child(3) {
+  transform: translateY(1px) rotate(-0.3deg);
+}
+
+.wc-stat-item:nth-child(4) {
+  transform: translateY(-4px) rotate(0.7deg);
+}
+
+.wc-stat-item:nth-child(5) {
+  transform: translateY(2px) rotate(-0.5deg);
+}
+
+.wc-stat-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 22px;
+  font-weight: 900;
+  /* On the lighter bottom zone */
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.wc-stat-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  /* Darker for legibility on lighter bottom zone */
+  color: #2a2a2a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Process Panel ─────────────────────────────────────────── */
+.wc-process-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 36% 42% 38% 44% / 40% 36% 44% 38%;
+  /* Extra top & side padding so toolbar isn't cropped by organic radii */
+  padding: 30px 36px 18px;
+  margin-left: 5px;
+  margin-right: 10px;
+  transform: rotate(0.2deg);
+}
+
+/* Ensure toolbar isn't cropped by blob radius */
+.wc-process-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 7;
+}
+
+/* ── Search Input ──────────────────────────────────────────── */
+.wc-search-input {
+  flex: 1;
+  max-width: 55%;
+  height: 32px;
+  background: var(--glass-inset-bg);
+  border: none;
+  color: var(--text-data);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0 14px;
+  margin-left: 20px;
+  box-shadow: var(--gel-inset);
+  outline: none;
+  transition: box-shadow 0.2s;
+  border-radius: 30px;
+}
+
+.wc-search-input:focus {
+  box-shadow: var(--gel-inset),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.wc-search-input::placeholder {
+  color: rgba(200, 200, 200, 0.25);
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* ── Toolbar Buttons ───────────────────────────────────────── */
+.wc-toolbar-btn {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  white-space: nowrap;
+  /* Dark top, light bottom gel */
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #333 20%,
+      #555 42%,
+      #888 68%,
+      #aaa 88%,
+      #999 100%);
+  box-shadow: var(--gel-bevel-sm);
+  border-radius: 30px;
+  transition: transform 0.12s;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Specular highlight */
+.wc-toolbar-btn::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 42%;
+  background: radial-gradient(ellipse at 50% 8%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-toolbar-btn:hover {
+  transform: scale(1.06);
+}
+
+.wc-toolbar-btn.active {
+  background: linear-gradient(180deg, #000, #111, #1a1a1a, #333);
+  color: #d0d0d0;
+  text-shadow: var(--text-glow);
+}
+
+/* ── Process Table ─────────────────────────────────────────── */
+.wc-process-table-wrap {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--glass-inset-bg);
+  box-shadow: var(--gel-inset);
+  border-radius: 16px 22px 18px 20px / 18px 16px 22px 18px;
+  position: relative;
+  z-index: 7;
+}
+
+.wc-process-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.wc-process-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.wc-process-table th {
+  background: rgba(20, 22, 30, 0.95);
+  font-family: 'Orbitron', monospace;
+  color: rgba(200, 200, 200, 0.5);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 7px 8px;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.wc-process-table th:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.wc-process-table th.sorted {
+  color: #ffffff;
+}
+
+.wc-process-table th .sort-arrow {
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+/* Column widths */
+.wc-col-pid {
+  width: 65px;
+}
+
+.wc-col-user {
+  width: 72px;
+}
+
+.wc-col-pri {
+  width: 38px;
+}
+
+.wc-col-nice {
+  width: 38px;
+}
+
+.wc-col-virt {
+  width: 62px;
+}
+
+.wc-col-res {
+  width: 62px;
+}
+
+.wc-col-cpu {
+  width: 58px;
+}
+
+.wc-col-mem {
+  width: 58px;
+}
+
+.wc-col-state {
+  width: 30px;
+}
+
+.wc-col-time {
+  width: 72px;
+}
+
+.wc-col-cmd {
+  width: auto;
+}
+
+.wc-process-table td {
+  padding: 4px 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-data);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wc-process-table tr {
+  transition: background 0.1s;
+}
+
+.wc-process-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.wc-process-table tbody tr.selected {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.wc-process-table tbody tr.selected td {
+  color: #fff;
+}
+
+.wc-process-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.012);
+}
+
+/* CPU heat colors */
+.wc-cpu-hot {
+  color: var(--data-red) !important;
+}
+
+.wc-cpu-warm {
+  color: var(--data-orange) !important;
+}
+
+.wc-cpu-mild {
+  color: var(--data-yellow) !important;
+}
+
+.wc-cpu-cool {
+  color: var(--data-green) !important;
+}
+
+/* ── F-Key Bar (Scattered Gel Pills) ───────────────────────── */
+.wc-fkey-bar {
+  display: flex;
+  gap: 6px;
+  padding: 6px 0 0;
+  flex-shrink: 0;
+  margin-left: 15px;
+  margin-right: 20px;
+}
+
+.wc-fkey {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  cursor: pointer;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  /* Frutiger gel pill: dark top → light bottom */
+  background: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #2a2a2a 15%,
+      #454545 35%,
+      #757575 60%,
+      #a0a0a0 82%,
+      #909090 100%);
+  box-shadow: var(--gel-bevel-sm);
+  border-radius: 50px;
+  transition: transform 0.1s;
+}
+
+/* Specular highlight */
+.wc-fkey::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 40%;
+  background: radial-gradient(ellipse at 50% 8%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.12) 55%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-fkey:hover {
+  transform: scale(1.08);
+}
+
+.wc-fkey:active {
+  transform: scale(0.96);
+  box-shadow: var(--gel-inset);
+}
+
+/* Stagger */
+.wc-fkey:nth-child(odd) {
+  transform: translateY(2px);
+}
+
+.wc-fkey:nth-child(even) {
+  transform: translateY(-1px);
+}
+
+.wc-fkey:nth-child(odd):hover {
+  transform: translateY(2px) scale(1.08);
+}
+
+.wc-fkey:nth-child(even):hover {
+  transform: translateY(-1px) scale(1.08);
+}
+
+.wc-fkey-key {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 900;
+  /* Light text for dark top area */
+  color: #ccc;
+  text-shadow: var(--text-glow);
+  position: relative;
+  z-index: 1;
+}
+
+.wc-fkey-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+.wc-process-table-wrap::-webkit-scrollbar {
+  width: 12px;
+}
+
+.wc-process-table-wrap::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 80px;
+}
+
+.wc-process-table-wrap::-webkit-scrollbar-thumb {
+  /* Frutiger gel scrollbar */
+  background: linear-gradient(180deg, #222, #444, #777, #aaa, #999);
+  border-radius: 80px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.4),
+    inset 0 -2px 4px rgba(255, 255, 255, 0.2);
+}
+
+/* ── Kill Dialog ───────────────────────────────────────────── */
+.wc-kill-dialog {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+}
+
+.wc-kill-dialog.active {
+  display: flex;
+}
+
+.wc-kill-dialog-inner {
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.6);
+  padding: 26px;
+  min-width: 320px;
+  box-shadow: var(--gel-bevel);
+  border-radius: 32% 62% 52% 48% / 42% 52% 48% 58%;
+  position: relative;
+  overflow: hidden;
+}
+
+.wc-kill-dialog-inner::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 8%;
+  right: 8%;
+  height: 38%;
+  background: radial-gradient(ellipse 80% 80% at 50% 12%,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 255, 255, 0.2) 40%,
+      transparent 80%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-kill-dialog h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-kill-dialog .wc-kill-pid {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  color: var(--text-mid);
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-signal-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-signal-btn {
+  padding: 10px 14px;
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(180deg, #1a1a1a, #333, #666, #999, #888);
+  box-shadow: var(--gel-bevel-sm);
+  border-radius: 30px;
+  transition: transform 0.1s;
+  position: relative;
+  overflow: hidden;
+}
+
+.wc-signal-btn::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 38%;
+  background: radial-gradient(ellipse at 50% 8%,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-signal-btn:hover {
+  transform: scale(1.06);
+}
+
+.wc-kill-cancel {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background: linear-gradient(180deg, #1a1a1a, #333, #555, #888, #aaa, #999);
+  box-shadow: var(--gel-bevel-sm);
+  transition: transform 0.1s;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-kill-cancel:hover {
+  transform: scale(1.03);
+}
+
+/* ── Network I/O ───────────────────────────────────────────── */
+.wc-io-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  margin: 4px 0;
+  position: relative;
+  z-index: 7;
+}
+
+.wc-io-arrow {
+  font-size: 16px;
+  width: 16px;
+}
+
+.wc-io-arrow.up {
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+}
+
+.wc-io-arrow.down {
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+}
+
+.wc-io-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+  min-width: 75px;
+}
+
+/* ── Resize Handle ─────────────────────────────────────────── */
+.wc-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  -webkit-app-region: no-drag;
+  z-index: 100;
+}
+
+.wc-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(180, 180, 180, 0.3);
+  border-bottom: 2px solid rgba(180, 180, 180, 0.3);
+}
+
+/* ── Help Overlay ──────────────────────────────────────────── */
+.wc-help-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+}
+
+.wc-help-overlay.active {
+  display: flex;
+}
+
+.wc-help-inner {
+  background: var(--gel-shell);
+  border: 2px solid rgba(50, 50, 50, 0.6);
+  padding: 30px 36px;
+  min-width: 360px;
+  max-width: 480px;
+  box-shadow: var(--gel-bevel);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specular highlight */
+.wc-help-inner::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 8%;
+  right: 8%;
+  height: 35%;
+  background: radial-gradient(ellipse 80% 80% at 50% 12%,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 255, 255, 0.2) 40%,
+      transparent 80%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.wc-help-inner h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-shadow: var(--text-glow);
+  margin: 0 0 18px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-help-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-help-key {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(180deg, #333, #666, #999, #888);
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(40, 40, 40, 0.4);
+  box-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.wc-help-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+}
+
+.wc-help-close {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(200, 200, 200, 0.4);
+  text-align: center;
+  margin-top: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── About Popup ───────────────────────────────────────────── */
+.wc-about-inner {
+  text-align: center;
+}
+
+.wc-about-tagline {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  font-style: italic;
+  margin: 0 0 14px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-about-credit {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-about-credit strong {
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.wc-about-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.wc-about-link {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark-on-light);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  background: linear-gradient(180deg, #1a1a1a, #333, #666, #999, #888);
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 1px solid rgba(40, 40, 40, 0.4);
+  box-shadow: var(--gel-bevel-sm);
+  transition: transform 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+
+.wc-about-link::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15%;
+  right: 15%;
+  height: 40%;
+  background: radial-gradient(ellipse at 50% 8%,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Setup Overlay ──────────────────────────────────────────── */
+.wc-setup-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.wc-setup-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wc-setup-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.wc-setup-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  color: var(--data-green);
+  text-shadow: var(--text-glow);
+}
+
+/* Frutiger Aero Toggle Switch */
+.wc-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.wc-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wc-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, #111, #333);
+  transition: .4s;
+  border-radius: 34px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.wc-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background: linear-gradient(180deg, #eee 0%, #999 100%);
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+input:checked+.wc-slider {
+  background: linear-gradient(180deg, #22aa44, #115522);
+}
+
+input:checked+.wc-slider:before {
+  transform: translateX(22px);
+  background: linear-gradient(180deg, #fff 0%, #afa 100%);
+}
+
+.wc-about-link:hover {
+  transform: scale(1.08);
+}

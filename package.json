@@ -1,0 +1,20 @@
+{
+    "name": "aerotop",
+    "version": "0.1.0",
+    "description": "A skinnable system monitor with non-linear, amorphous UI — htop meets Winamp",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "dev": "NODE_ENV=development electron .",
+        "package": "electron-builder --linux"
+    },
+    "author": "Joe",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^33.0.0",
+        "electron-builder": "^25.0.0"
+    },
+    "dependencies": {
+        "systeminformation": "^5.23.0"
+    }
+}
