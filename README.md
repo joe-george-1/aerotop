@@ -31,8 +31,35 @@
 | **F10** | Quit App |
 | **Esc** | Close Overlays / Clear Search |
 
-## 🚀 Installation & Development
+## 📦 Downloads & Installation
 
+### 📥 Standalone Binaries
+You can download pre-built binaries for your platform from the [Releases](https://github.com/joe-george-1/aerotop/releases) page:
+- **Windows**: `Aerotop-Setup-1.0.0.exe` (NSIS Installer)
+- **Linux**: `Aerotop-1.0.0.AppImage` (Universal)
+- **macOS**: `Aerotop-1.0.0.dmg` (Intel/Apple Silicon)
+
+### 🐧 Linux Repositories
+
+#### Arch Linux (AUR)
+Aerotop is available in the AUR. You can install it using an AUR helper like `paru` or `yay`:
+```bash
+yay -S aerotop
+```
+*(Note: If not yet in the official AUR, see the `PKGBUILD` in the root of this repo to build manually.)*
+
+#### KDE Discover / GNOME Software (Flatpak)
+We are currently working on a Flathub submission. In the meantime, you can build the AppImage or use the standalone binary.
+
+## 🛠 Development & Building from Source
+
+If you want to build Aerotop yourself or contribute to the project:
+
+### Prerequisites:
+- [Node.js](https://nodejs.org/) (v16+)
+- npm
+
+### Setup:
 ```bash
 # Clone the repository
 git clone https://github.com/joe-george-1/aerotop.git
@@ -40,9 +67,17 @@ cd aerotop
 
 # Install dependencies
 npm install
+```
 
+### Build Commands:
+```bash
 # Run in development mode
 npm run dev
+
+# Build for your current platform
+npm run build:linux   # AppImage
+npm run build:win     # Windows NSIS
+npm run build:mac     # macOS DMG
 ```
 
 ## 🛠 Tech Stack

@@ -1,0 +1,25 @@
+id: com.aerotop.app
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node18
+command: aerotop
+modules:
+  - name: aerotop
+    buildsystem: simple
+    build-commands:
+      - npm install
+      - npm run build:linux
+      - cp dist/Aerotop*.AppImage /app/bin/aerotop
+    sources:
+      - type: git
+        url: https://github.com/joe-george-1/aerotop
+        tag: v1.0.0
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+  - --share=network
+  - --device=all
+  - --filesystem=host:ro
