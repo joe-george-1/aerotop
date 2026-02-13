@@ -1,8 +1,8 @@
 # 🌊 Aerotop
 
-**Aerotop** is a high-performance system monitor for Linux, wrapped in a surreal, bioluminescent "Frutiger Aero" aesthetic. It combines the nostalgic glassmorphism and glossy gels of the mid-2000s with modern system telemetry.
+**Aerotop** is a high-performance system monitor for Linux, wrapped in a surreal, bioluminescent "Frutiger Aero" aesthetic. It combines glassmorphism and glossy gels with modern system telemetry.
 
-![Aerotop Preview](file:///home/joe/Development/aerotop/src/skins/winamp-chrome/skin_preview.png)
+[Aerotop Preview](file:///home/joe/Development/aerotop/src/skins/winamp-chrome/skin_preview.png)
 
 ## ✨ Features
 
