@@ -10,8 +10,16 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            build_script: build:linux
+          - os: windows-latest
+            build_script: build:win
+          - os: macos-latest
+            build_script: build:mac
 
     steps:
       - name: Checkout Code
@@ -23,6 +31,12 @@ jobs:
           node-version: 18
           cache: 'npm'
 
+      - name: Install System Dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fakeroot dpkg
+
       - name: Install Dependencies
         run: npm install
 
@@ -31,5 +45,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release: true
+          build_script: ${{ matrix.build_script }}
           # Note: MacOS notarization requires secrets (APPLE_ID, etc.)
           # Skipping notarization for now; user can build unsigned dmgs.
